@@ -1,14 +1,33 @@
-
+//5rr
 /* global THREE */
 
 'use strict';
 
 // Define default parameters
-const generalParameters = { // define all backgroun
+const defaultParameters = { // define all backgroun
   renderer: {
-    backgroundColor: 0xFFFFFF,
-    shadowsEnabled: true,
-  },
+    color: 0xFFFFFF,
+    shadows: true,
+  }, // renderer
+
+  plane: {
+    color: 0xffffff,
+    shadows: true,
+    width: 80,
+    height: 80,
+
+    rotation: {
+      x: -0.5 * Math.PI,
+      y: 0,
+      z: 0,
+    }, // rotation
+
+    position: {
+      x: 10,
+      y: -30,
+      z: -20,
+    }, // position
+  }, // plane
 };
 // once everything is loaded, we run our Three.js stuff.
 function init() {
@@ -20,17 +39,27 @@ function init() {
 
   // create a render and set the size
   const renderer = new THREE.WebGLRenderer();
-  renderer.setClearColor(new THREE.Color(generalParameters.renderer.backgroundColor));
+  renderer.setClearColor(new THREE.Color(defaultParameters.renderer.color));
   renderer.setSize(window.innerWidth, window.innerHeight);
-  renderer.shadowMap.enabled = generalParameters.renderer.shadowsEnabled;
+  renderer.shadowMap.enabled = defaultParameters.renderer.shadows;
 
   // create the ground plane
-  const planeGeometry = new THREE.PlaneGeometry(80, 80);
-  const planeMaterial = new THREE.MeshLambertMaterial({ color: 0xffffff });
+  const planeGeometry = new THREE.PlaneGeometry(
+    defaultParameters.plane.width,
+    defaultParameters.plane.height,
+  );
+  const planeMaterial = new THREE.MeshLambertMaterial({ color: defaultParameters.plane.color });
   const plane = new THREE.Mesh(planeGeometry, planeMaterial);
-  plane.receiveShadow = true;
-  plane.rotation.set(-0.5 * Math.PI, 0, 0);
-  plane.position.set(10, -30, -20);
+
+  plane.rotation.x = defaultParameters.plane.rotation.x;
+  plane.rotation.y = defaultParameters.plane.rotation.y;
+  plane.rotation.z = defaultParameters.plane.rotation.z;
+
+  plane.position.x = defaultParameters.plane.position.x;
+  plane.position.y = defaultParameters.plane.position.y;
+  plane.position.z = defaultParameters.plane.position.z;
+
+  plane.receiveShadow = defaultParameters.plane.shadows;
   scene.add(plane);
 
   // create a SFM shapes
