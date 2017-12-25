@@ -5,7 +5,3 @@
 ## Plaids
 
 ## MIB
-
-## Links:
-1. [Visual Phenomena & Optical Illusions
-132 of them – by Michael Bach.](http://www.michaelbach.de/ot/) Awesome collection of optical illusions and their explanations.
