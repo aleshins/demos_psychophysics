@@ -5,8 +5,10 @@
 
 // Define default parameters
 const generalParameters = { // define all backgroun
-  backgroundColor: 0xFFFFFF,
-  shadowsEnabled: true,
+  renderer: {
+    backgroundColor: 0xFFFFFF,
+    shadowsEnabled: true,
+  },
 };
 // once everything is loaded, we run our Three.js stuff.
 function init() {
@@ -18,9 +20,9 @@ function init() {
 
   // create a render and set the size
   const renderer = new THREE.WebGLRenderer();
-  renderer.setClearColor(new THREE.Color(generalParameters.backgroundColor));
+  renderer.setClearColor(new THREE.Color(generalParameters.renderer.backgroundColor));
   renderer.setSize(window.innerWidth, window.innerHeight);
-  renderer.shadowMap.enabled = generalParameters.shadowsEnabled;
+  renderer.shadowMap.enabled = generalParameters.renderer.shadowsEnabled;
 
   // create the ground plane
   const planeGeometry = new THREE.PlaneGeometry(80, 80);
