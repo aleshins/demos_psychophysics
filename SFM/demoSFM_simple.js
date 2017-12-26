@@ -1,4 +1,4 @@
-//123
+//111
 /* global THREE */
 
 'use strict';
@@ -10,7 +10,7 @@ const defaultParameters = { // define all backgroun
     shadows: true,
   }, // renderer
 
-  plane: {
+  landscape: {
     color: 0xFFFFFF,
     shadows: true,
     width: 80,
@@ -27,7 +27,7 @@ const defaultParameters = { // define all backgroun
       y: -30,
       z: -20,
     }, // position
-  }, // plane
+  }, // landscape
   parentShape: {
     numberOfNodes: 10,
     size: 20,
@@ -53,24 +53,24 @@ function init() {
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.shadowMap.enabled = defaultParameters.renderer.shadows;
 
-  // create the ground plane
-  const planeGeometry = new THREE.PlaneGeometry(
-    defaultParameters.plane.width,
-    defaultParameters.plane.height,
+  // create the landscape
+  const landscapeGeometry = new THREE.PlaneGeometry(
+    defaultParameters.landscape.width,
+    defaultParameters.landscape.height,
   );
-  const planeMaterial = new THREE.MeshLambertMaterial({ color: defaultParameters.plane.color });
-  const plane = new THREE.Mesh(planeGeometry, planeMaterial);
+  const landscapeMaterial = new THREE.MeshLambertMaterial({ color: defaultParameters.landscape.color });
+  const landscape = new THREE.Mesh(landscapeGeometry, landscapeMaterial);
 
-  plane.rotation.x = defaultParameters.plane.rotation.x;
-  plane.rotation.y = defaultParameters.plane.rotation.y;
-  plane.rotation.z = defaultParameters.plane.rotation.z;
+  landscape.rotation.x = defaultParameters.landscape.rotation.x;
+  landscape.rotation.y = defaultParameters.landscape.rotation.y;
+  landscape.rotation.z = defaultParameters.landscape.rotation.z;
 
-  plane.position.x = defaultParameters.plane.position.x;
-  plane.position.y = defaultParameters.plane.position.y;
-  plane.position.z = defaultParameters.plane.position.z;
+  landscape.position.x = defaultParameters.landscape.position.x;
+  landscape.position.y = defaultParameters.landscape.position.y;
+  landscape.position.z = defaultParameters.landscape.position.z;
 
-  plane.receiveShadow = defaultParameters.plane.shadows;
-  scene.add(plane);
+  landscape.receiveShadow = defaultParameters.landscape.shadows;
+  scene.add(landscape);
 
   // create a SFM shapes
   const parentGeometry = new THREE.SphereGeometry(
