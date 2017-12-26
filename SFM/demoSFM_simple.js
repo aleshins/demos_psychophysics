@@ -1,4 +1,4 @@
-//5rr
+//123
 /* global THREE */
 
 'use strict';
@@ -11,7 +11,7 @@ const defaultParameters = { // define all backgroun
   }, // renderer
 
   plane: {
-    color: 0xffffff,
+    color: 0xFFFFFF,
     shadows: true,
     width: 80,
     height: 80,
@@ -28,6 +28,16 @@ const defaultParameters = { // define all backgroun
       z: -20,
     }, // position
   }, // plane
+  parentShape: {
+    numberOfNodes: 10,
+    size: 20,
+  }, // parent shape
+  childShape: {
+    numberOfNodes: 10,
+    size: 1,
+    color: 0x7777ff,
+    shadows: true,
+  }, // child shape
 };
 // once everything is loaded, we run our Three.js stuff.
 function init() {
@@ -63,19 +73,32 @@ function init() {
   scene.add(plane);
 
   // create a SFM shapes
-  const parentGeometry = new THREE.SphereGeometry(20, 10, 10);
+  const parentGeometry = new THREE.SphereGeometry(
+    defaultParameters.parentShape.size,
+    defaultParameters.parentShape.numberOfNodes,
+    defaultParameters.parentShape.numberOfNodes,
+  );
+
   const vertices = parentGeometry.vertices;
   const parentShape = new THREE.Mesh();
-  const childShapeGeometry = new THREE.SphereGeometry(2, 10, 10);
-  const childShapeMaterial = new THREE.MeshLambertMaterial({ color: 0x7777ff });
+
+  const childShapeGeometry = new THREE.SphereGeometry(
+    defaultParameters.childShape.size,
+    defaultParameters.childShape.numberOfNodes,
+    defaultParameters.childShape.numberOfNodes,
+  );
+  const childShapeMaterial = new THREE.MeshLambertMaterial({
+    color: defaultParameters.childShape.color,
+  });
   const childShapeTemplate = new THREE.Mesh(childShapeGeometry, childShapeMaterial);
-  childShapeTemplate.castShadow = true;
+  childShapeTemplate.castShadow = defaultParameters.childShape.shadows;
   for (let i = 0, l = vertices.length; i < l; i++) {
     const childShape = childShapeTemplate.clone();
     childShape.position.copy(vertices[i]);
     parentShape.add(childShape);
   }
   scene.add(parentShape);
+
   // position and point the camera to the center of the scene
   camera.position.copy({ x: 0, y: 0, z: 100 });
   camera.lookAt(scene.position);
