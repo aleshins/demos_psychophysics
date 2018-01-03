@@ -71,10 +71,16 @@ function init() {
     parentShape.add(childShape);
   }
   scene.add(parentShape);
-
+  // add fixation point
+  let fixationGeometry = new THREE.TorusKnotGeometry(3, 1);
+  let fixationMaterial = new THREE.MeshLambertMaterial({ color: 0xffff00 });
+  let fixationShape = new THREE.Mesh(fixationGeometry, fixationMaterial);
+  fixationShape.castShadow = true;
+  fixationShape.receiveShadow = true;
+  scene.add(fixationShape);
   // position and point the camera to the center of the scene
   camera.position.copy({ x: 0, y: 0, z: 100 });
-  camera.lookAt(scene.position);
+  camera.lookAt(parentShape.position);
   // add spotlight for the shadows
   const spotLight = new THREE.SpotLight(0xffffff);
   spotLight.position.set(-100, 100, 50);
