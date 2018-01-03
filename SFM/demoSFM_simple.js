@@ -4,7 +4,7 @@
 
 let camera;
 let renderer;
-const defaultParameters = getDefaultParams();
+const currentParameters = getDefaultParams();
 // once everything is loaded, we run our Three.js stuff.
 function init() {
   // create a scene, that will hold all our elements such as objects, cameras and lights.
@@ -15,54 +15,59 @@ function init() {
 
   // create a render and set the size
   renderer = new THREE.WebGLRenderer();
-  renderer.setClearColor(new THREE.Color(defaultParameters.renderer.color));
+  renderer.setClearColor(new THREE.Color(currentParameters.renderer.color));
   renderer.setSize(window.innerWidth, window.innerHeight);
-  renderer.shadowMap.enabled = defaultParameters.renderer.shadows;
+  renderer.shadowMap.enabled = currentParameters.renderer.shadows;
 
   // create the landscape
   const landscapeGeometry = new THREE.PlaneGeometry(
-    defaultParameters.landscape.width,
-    defaultParameters.landscape.height,
+    currentParameters.landscape.width,
+    currentParameters.landscape.height,
   );
-  const landscapeMaterial = new THREE.MeshLambertMaterial({ color: defaultParameters.landscape.color });
+  const landscapeMaterial = new THREE.MeshLambertMaterial({ color: currentParameters.landscape.color });
   const landscape = new THREE.Mesh(landscapeGeometry, landscapeMaterial);
 
-  landscape.rotation.x = defaultParameters.landscape.rotation.x;
-  landscape.rotation.y = defaultParameters.landscape.rotation.y;
-  landscape.rotation.z = defaultParameters.landscape.rotation.z;
+  landscape.rotation.x = currentParameters.landscape.rotation.x;
+  landscape.rotation.y = currentParameters.landscape.rotation.y;
+  landscape.rotation.z = currentParameters.landscape.rotation.z;
 
-  landscape.position.x = defaultParameters.landscape.position.x;
-  landscape.position.y = defaultParameters.landscape.position.y;
-  landscape.position.z = defaultParameters.landscape.position.z;
+  landscape.position.x = currentParameters.landscape.position.x;
+  landscape.position.y = currentParameters.landscape.position.y;
+  landscape.position.z = currentParameters.landscape.position.z;
 
-  landscape.receiveShadow = defaultParameters.landscape.shadows;
+  landscape.receiveShadow = currentParameters.landscape.shadows;
   scene.add(landscape);
 
   // create a SFM shapes
-  const parentGeometry = new THREE.SphereGeometry(
-    defaultParameters.parentShape.size,
-    defaultParameters.parentShape.numberOfNodes,
-    defaultParameters.parentShape.numberOfNodes,
+  let parentGeometry = new THREE.SphereGeometry(
+    currentParameters.parentShape.size,
+    currentParameters.parentShape.numberOfVertices,
+    currentParameters.parentShape.numberOfVertices,
   );
+  let parentMaterial = new THREE.MeshLambertMaterial({
+    color: 0x7777ff,
+    opacity: 0.3,
+    transparent: true,
+  });
 
-  const vertices = parentGeometry.vertices;
-  const parentShape = new THREE.Mesh();
+
+  let parentShape = new THREE.Mesh(parentGeometry, parentMaterial); // new THREE.Mesh();
 
   const childShapeGeometry = new THREE.SphereGeometry(
-    defaultParameters.childShape.size,
-    defaultParameters.childShape.numberOfNodes,
-    defaultParameters.childShape.numberOfNodes,
+    currentParameters.childShape.size,
+    currentParameters.childShape.numberOfVertices,
+    currentParameters.childShape.numberOfVertices,
   );
   const childShapeMaterial = new THREE.MeshLambertMaterial({
-    color: defaultParameters.childShape.color,
+    color: currentParameters.childShape.color,
   });
   const childShapeTemplate = new THREE.Mesh(childShapeGeometry, childShapeMaterial);
-  childShapeTemplate.castShadow = defaultParameters.childShape.shadows;
-  for (let i = 0, l = vertices.length; i < l; i++) {
+  childShapeTemplate.castShadow = currentParameters.childShape.shadows;
+  for (let i = 0, l = currentParameters.parentShape.numberOfChilds; i < l; i++) {
     const childShape = childShapeTemplate.clone();
     // add random dot to parent shape
     [childShape.position.x, childShape.position.y, childShape.position.z] =
-    generateRandomDotOnSphere(0, 0, 0, defaultParameters.parentShape.size);
+    generateRandomDotOnSphere(0, 0, 0, currentParameters.parentShape.size);
     parentShape.add(childShape);
   }
   scene.add(parentShape);

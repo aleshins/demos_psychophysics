@@ -25,11 +25,12 @@ function getDefaultParams() {
       }, // position
     }, // landscape
     parentShape: {
-      numberOfNodes: 10,
+      numberOfVertices: 10,
       size: 20,
+      numberOfChilds: 50,
     }, // parent shape
     childShape: {
-      numberOfNodes: 10,
+      numberOfVertices: 5,
       size: 1,
       color: 0x7777ff,
       shadows: true,
