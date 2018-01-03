@@ -60,7 +60,9 @@ function init() {
   childShapeTemplate.castShadow = defaultParameters.childShape.shadows;
   for (let i = 0, l = vertices.length; i < l; i++) {
     const childShape = childShapeTemplate.clone();
-    childShape.position.copy(vertices[i]);
+    // add random dot to parent shape
+    [childShape.position.x, childShape.position.y, childShape.position.z] =
+    generateRandomDotOnSphere(0, 0, 0, defaultParameters.parentShape.size);
     parentShape.add(childShape);
   }
   scene.add(parentShape);
@@ -93,3 +95,22 @@ function onResize() {
 window.onload = init;
 // listen to the resize events
 window.addEventListener('resize', onResize, false);
+
+// *********************************************
+// *********HELPERS*****************************
+function generateRandomDotOnSphere(x0, y0, z0, radius) {
+/*
+source: https://stackoverflow.com/questions/5531827/random-point-on-a-given-sphere
+Returns a random point of a sphere, evenly distributed over the sphere.
+The sphere is centered at (x0,y0,z0) with the passed in radius.
+The returned point is returned as a three element array [x,y,z].
+*/
+  let u = Math.random();
+  let v = Math.random();
+  let theta = 2 * Math.PI * u;
+  let phi = Math.acos(2 * v - 1);
+  let x = x0 + (radius * Math.sin(phi) * Math.cos(theta));
+  let y = y0 + (radius * Math.sin(phi) * Math.sin(theta));
+  let z = z0 + (radius * Math.cos(phi));
+  return [x, y, z];
+}
