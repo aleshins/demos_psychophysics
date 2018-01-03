@@ -2,6 +2,8 @@
 
 'use strict';
 
+let camera;
+let renderer;
 const defaultParameters = getDefaultParams();
 // once everything is loaded, we run our Three.js stuff.
 function init() {
@@ -9,10 +11,10 @@ function init() {
   const scene = new THREE.Scene();
 
   // create a camera, which defines where we're looking at.
-  const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+  camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
 
   // create a render and set the size
-  const renderer = new THREE.WebGLRenderer();
+  renderer = new THREE.WebGLRenderer();
   renderer.setClearColor(new THREE.Color(defaultParameters.renderer.color));
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.shadowMap.enabled = defaultParameters.renderer.shadows;
@@ -81,4 +83,13 @@ function init() {
     renderer.render(scene, camera);
   }
 }
+function onResize() {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+}
+
+
 window.onload = init;
+// listen to the resize events
+window.addEventListener('resize', onResize, false);
