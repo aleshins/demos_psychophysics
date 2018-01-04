@@ -2,6 +2,7 @@
 
 ## Structure from motion
 [Unambiguous demo](https://aleshins.github.io/demos_psychophysics/SFM/demoSFM_simple.html) **Under development**
+
 [Ambiguous demo](https://aleshins.github.io/demos_psychophysics/SFM/ambiguous.html) **Under development**
 ## Plaids
 
