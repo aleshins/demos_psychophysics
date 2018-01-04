@@ -1,7 +1,8 @@
 # Demonstration of different displays we use in our psychophysic experiments.
 
 ## Structure from motion
-[Simple demo](https://aleshins.github.io/demos_psychophysics/SFM/demoSFM_simple.html) **Under development**
+[Unambiguous demo](https://aleshins.github.io/demos_psychophysics/SFM/demoSFM_simple.html) **Under development**
+[Ambiguous demo](https://aleshins.github.io/demos_psychophysics/SFM/ambiguous.html) **Under development**
 ## Plaids
 
 ## MIB
